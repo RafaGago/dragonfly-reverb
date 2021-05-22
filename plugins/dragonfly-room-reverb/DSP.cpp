@@ -13,7 +13,7 @@
  *
  * For a full copy of the GNU General Public License see the LICENSE file.
  */
-
+// clang-format off
 #include "DistrhoPlugin.hpp"
 #include "DistrhoPluginInfo.h"
 #include "DSP.hpp"
@@ -21,6 +21,8 @@
 
 // Increase the late level by approx 8dB
 #define LATE_GAIN 2.5f
+
+namespace dragonfly { namespace room {
 
 DragonflyReverbDSP::DragonflyReverbDSP(double sampleRate) {
   input_lpf_0.mute();
@@ -119,12 +121,12 @@ void DragonflyReverbDSP::run(const float** inputs, float** outputs, uint32_t fra
       early_out_buffer[0],
       early_out_buffer[1],
       buffer_frames);
-    
+
     for (uint32_t i = 0; i < buffer_frames; i++) {
       late_in_buffer[0][i] = early_send * early_out_buffer[0][i] + filtered_input_buffer[0][i];
       late_in_buffer[1][i] = early_send * early_out_buffer[1][i] + filtered_input_buffer[1][i];
     }
-    
+
     late.processreplace(
       const_cast<float *>(late_in_buffer[0]),
       const_cast<float *>(late_in_buffer[1]),
@@ -136,14 +138,14 @@ void DragonflyReverbDSP::run(const float** inputs, float** outputs, uint32_t fra
       outputs[0][offset + i] = dry_level   * inputs[0][offset + i];
       outputs[1][offset + i] = dry_level   * inputs[1][offset + i];
     }
-    
+
     if( early_level > 0.0 ){
       for (uint32_t i = 0; i < buffer_frames; i++) {
 	outputs[0][offset + i] += early_level * early_out_buffer[0][i];
 	outputs[1][offset + i] += early_level * early_out_buffer[1][i];
       }
     }
-    
+
     if( late_level > 0.0 ){
       for (uint32_t i = 0; i < buffer_frames; i++) {
 	outputs[0][offset + i] += late_level  * late_out_buffer[0][i];
@@ -188,3 +190,5 @@ void DragonflyReverbDSP::setInputHPF(float freq) {
   input_hpf_0.setHPF_BW(freq, sampleRate);
   input_hpf_1.setHPF_BW(freq, sampleRate);
 }
+
+}}

@@ -13,13 +13,15 @@
  *
  * For a full copy of the GNU General Public License see the LICENSE file.
  */
-
+// clang-format off
 #ifndef DRAGONFLY_REVERB_DSP_HPP_INCLUDED
 #define DRAGONFLY_REVERB_DSP_HPP_INCLUDED
 
 #include "AbstractDSP.hpp"
 #include "freeverb/earlyref.hpp"
 #include "freeverb/progenitor2.hpp"
+
+namespace dragonfly { namespace room {
 
 class DragonflyReverbDSP : public AbstractDSP {
 public:
@@ -55,5 +57,7 @@ private:
   void setInputLPF(float freq);
   void setInputHPF(float freq);
 };
+
+}}
 
 #endif

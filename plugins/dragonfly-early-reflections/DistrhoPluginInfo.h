@@ -13,7 +13,7 @@
  *
  * For a full copy of the GNU General Public License see the LICENSE file.
  */
-
+// clang-format off
 #include <cstdint>
 #include <Param.hpp>
 
@@ -31,6 +31,8 @@
 #define DISTRHO_PLUGIN_WANT_STATE    0
 
 #define DISTRHO_PLUGIN_LV2_CATEGORY "lv2:ReverbPlugin"
+
+namespace dragonfly { namespace er {
 
 enum Parameters
 {
@@ -68,7 +70,7 @@ typedef struct {
 
 static Program programs[PROGRAM_COUNT] = {
   {"Abrupt Echo",     2},
-  {"Backstage Pass", 18}, 
+  {"Backstage Pass", 18},
   {"Concert Venue",   0},
   {"Damaged Goods",  19},
   {"Elevator Pitch",  1},
@@ -79,5 +81,6 @@ static Program programs[PROGRAM_COUNT] = {
 
 const int DEFAULT_PROGRAM = 2;
 
+}}
 
 #endif // DISTRHO_PLUGIN_INFO_H_INCLUDED

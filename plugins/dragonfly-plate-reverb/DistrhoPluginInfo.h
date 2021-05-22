@@ -13,7 +13,7 @@
  *
  * For a full copy of the GNU General Public License see the LICENSE file.
  */
-
+// clang-format off
 #include <cstdint>
 #include <Param.hpp>
 
@@ -32,6 +32,7 @@
 
 #define DISTRHO_PLUGIN_LV2_CATEGORY "lv2:ReverbPlugin"
 
+namespace dragonfly { namespace plate {
 
 enum Algorithms {
   ALGORITHM_NREV = 0,
@@ -67,7 +68,7 @@ enum Parameters
 static Param PARAMS[paramCount] = {
   {paramDry,        "Dry Level",    "dry_level",      0.0f,   100.0f,   "%"},
   {paramWet,        "Wet Level",    "early_level",    0.0f,   100.0f,   "%"},
-  {paramAlgorithm,  "Algorithm",    "algorithm",      0.0f,     2.0f,    ""},  
+  {paramAlgorithm,  "Algorithm",    "algorithm",      0.0f,     2.0f,    ""},
   {paramWidth,      "Width",        "width",         50.0f,   150.0f,   "%"},
   {paramPredelay,   "Predelay",     "predelay",       0.0f,   100.0f,  "ms"},
   {paramDecay,      "Decay",        "decay",          0.1f,    10.0f,   "s"},
@@ -97,5 +98,6 @@ static Preset presets[NUM_PRESETS] = {
 
 const int DEFAULT_PRESET = 1;
 
+}}
 
 #endif // DISTRHO_PLUGIN_INFO_H_INCLUDED

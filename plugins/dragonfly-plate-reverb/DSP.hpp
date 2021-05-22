@@ -13,7 +13,7 @@
  *
  * For a full copy of the GNU General Public License see the LICENSE file.
  */
-
+// clang-format off
 #ifndef DRAGONFLY_REVERB_DSP_HPP_INCLUDED
 #define DRAGONFLY_REVERB_DSP_HPP_INCLUDED
 
@@ -22,6 +22,7 @@
 #include "freeverb/nrevb.hpp"
 #include "freeverb/strev.hpp"
 
+namespace dragonfly { namespace plate {
 
 class NRev : public fv3::nrev_f {
 public:
@@ -82,5 +83,7 @@ private:
   void setInputLPF(float freq);
   void setInputHPF(float freq);
 };
+
+}}
 
 #endif

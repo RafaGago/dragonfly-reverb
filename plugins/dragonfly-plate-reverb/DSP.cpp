@@ -13,11 +13,13 @@
  *
  * For a full copy of the GNU General Public License see the LICENSE file.
  */
-
+// clang-format off
 #include "DistrhoPlugin.hpp"
 #include "DistrhoPluginInfo.h"
 #include "DSP.hpp"
 #include "math.h"
+
+namespace dragonfly { namespace plate {
 
 NRev::NRev() : fv3::nrev_f() { }
 
@@ -47,21 +49,21 @@ void NRev::processloop2(long count, float *inputL, float *inputR, float *outputL
       UNDENORMAL(hpf);
 
       hpf *= FV3_NREV_SCALE_WET;
-      
+
       for(long i = 0;i < FV3_NREV_NUM_COMB;i ++) outL += combL[i]._process(hpf);
       for(long i = 0;i < 3;i ++) outL = allpassL[i]._process_ov(outL);
       lpfL = dampLpfL(damp2*lpfL + damp2_1*outL); UNDENORMAL(lpfL);
       outL = allpassL[3]._process_ov(lpfL);
       outL = allpassL[5]._process_ov(outL);
       outL = delayWL(lLDCC(outL));
-      
+
       for(long i = 0;i < FV3_NREV_NUM_COMB;i ++) outR += combR[i]._process(hpf);
       for(long i = 0;i < 3;i ++) outR = allpassR[i]._process_ov(outR);
       lpfR = dampLpfR(damp2*lpfR + damp2_1*outR); UNDENORMAL(lpfR);
       outR = allpassR[3]._process_ov(lpfR);
       outR = allpassR[6]._process_ov(outR);
       outR = delayWR(lRDCC(outR));
-      
+
       *outputL = outL*wet1 + outR*wet2 + delayL(*inputL)*dry;
       *outputR = outR*wet1 + outL*wet2 + delayR(*inputR)*dry;
       inputL ++; inputR ++; outputL ++; outputR ++;
@@ -116,7 +118,7 @@ void NRevB::processloop2(long count, float *inputL, float *inputR, float *output
       lpfR = dampLpfR(damp2*lpfR + damp2_1*outR); UNDENORMAL(lpfR);
       outR = allpassR[3]._process(lpfR); outR = allpassL[6]._process(outR);
       outR = lRDCC(outR);
-      
+
       lastL = FV3_NREVB_SCALE_WET*delayWL(lastL);
       lastR = FV3_NREVB_SCALE_WET*delayWR(lastR);
       *outputL = lastL*wet1 + lastR*wet2 + delayL(*inputL)*dry;
@@ -184,7 +186,7 @@ void DragonflyReverbDSP::run(const float** inputs, float** outputs, uint32_t fra
       switch(index) {
         case           paramDry: dry_level         = (value / 100.0);             break;
         case           paramWet: wet_level         = (value / 100.0);             break;
-        case         paramWidth: strev.setwidth      (value / 120.0);             
+        case         paramWidth: strev.setwidth      (value / 120.0);
 	                         nrev.setwidth       (value / 120.0);
 				 nrevb.setwidth      (value / 120.0);             break;
         case      paramPredelay: strev.setPreDelay   (value);
@@ -253,7 +255,7 @@ void DragonflyReverbDSP::sampleRateChanged(double newSampleRate) {
   nrevb.setSampleRate(newSampleRate);
   strev.setSampleRate(newSampleRate);
   setInputLPF(newParams[paramHighCut]);
-  setInputHPF(newParams[paramLowCut]);  
+  setInputHPF(newParams[paramLowCut]);
 }
 
 void DragonflyReverbDSP::mute() {
@@ -283,3 +285,5 @@ void DragonflyReverbDSP::setInputHPF(float freq) {
   input_hpf_0.setHPF_BW(freq, sampleRate);
   input_hpf_1.setHPF_BW(freq, sampleRate);
 }
+
+}}

@@ -13,7 +13,7 @@
  *
  * For a full copy of the GNU General Public License see the LICENSE file.
  */
-
+// clang-format off
 #include <cstdint>
 #include <Param.hpp>
 
@@ -31,6 +31,8 @@
 #define DISTRHO_PLUGIN_WANT_STATE    1
 
 #define DISTRHO_PLUGIN_LV2_CATEGORY "lv2:ReverbPlugin"
+
+namespace dragonfly { namespace room {
 
 enum Parameters
 {
@@ -138,5 +140,6 @@ static Bank banks[NUM_BANKS] = {
 const int DEFAULT_BANK   = 1; // Medium Rooms
 const int DEFAULT_PRESET = 1; // Second preset in each bank
 
+}}
 
 #endif // DISTRHO_PLUGIN_INFO_H_INCLUDED

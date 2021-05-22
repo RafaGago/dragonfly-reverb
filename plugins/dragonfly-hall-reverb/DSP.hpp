@@ -14,13 +14,15 @@
  *
  * For a full copy of the GNU General Public License see the LICENSE file.
  */
-
+// clang-format off
 #ifndef DRAGONFLY_REVERB_DSP_HPP_INCLUDED
 #define DRAGONFLY_REVERB_DSP_HPP_INCLUDED
 
 #include "AbstractDSP.hpp"
 #include "freeverb/earlyref.hpp"
 #include "freeverb/zrev2.hpp"
+
+namespace dragonfly { namespace hall {
 
 class DragonflyReverbDSP : public AbstractDSP {
 public:
@@ -48,5 +50,7 @@ private:
   float late_in_buffer[2][BUFFER_SIZE];
   float late_out_buffer[2][BUFFER_SIZE];
 };
+
+}}
 
 #endif

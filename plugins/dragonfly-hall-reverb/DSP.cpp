@@ -14,10 +14,12 @@
  *
  * For a full copy of the GNU General Public License see the LICENSE file.
  */
-
+// clang-format off
 #include "DistrhoPlugin.hpp"
 #include "DistrhoPluginInfo.h"
 #include "DSP.hpp"
+
+namespace dragonfly { namespace hall {
 
 DragonflyReverbDSP::DragonflyReverbDSP(double sampleRate) {
   early.loadPresetReflection(FV3_EARLYREF_PRESET_1);
@@ -105,19 +107,19 @@ void DragonflyReverbDSP::run(const float** inputs, float** outputs, uint32_t fra
       early_out_buffer[0],
       early_out_buffer[1],
       buffer_frames);
-      
+
     for (uint32_t i = 0; i < buffer_frames; i++) {
       late_in_buffer[0][i] = early_send * early_out_buffer[0][i] + inputs[0][offset + i];
       late_in_buffer[1][i] = early_send * early_out_buffer[1][i] + inputs[1][offset + i];
     }
-    
+
     late.processreplace(
       const_cast<float *>(late_in_buffer[0]),
       const_cast<float *>(late_in_buffer[1]),
       late_out_buffer[0],
       late_out_buffer[1],
       buffer_frames);
-      
+
     for (uint32_t i = 0; i < buffer_frames; i++) {
       outputs[0][offset + i] = dry_level   * inputs[0][offset + i];
       outputs[1][offset + i] = dry_level   * inputs[1][offset + i];
@@ -129,7 +131,7 @@ void DragonflyReverbDSP::run(const float** inputs, float** outputs, uint32_t fra
         outputs[1][offset + i] += early_level * early_out_buffer[1][i];
       }
     }
-    
+
     if( late_level > 0.0 ){
       for (uint32_t i = 0; i < buffer_frames; i++) {
         outputs[0][offset + i] += late_level  * late_out_buffer[0][i];
@@ -148,3 +150,5 @@ void DragonflyReverbDSP::mute() {
   early.mute();
   late.mute();
 }
+
+}}

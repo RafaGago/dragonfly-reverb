@@ -13,12 +13,13 @@
  *
  * For a full copy of the GNU General Public License see the LICENSE file.
  */
-
+// clang-format off
 #include "DistrhoPlugin.hpp"
 #include "DistrhoPluginInfo.h"
 #include "DSP.hpp"
 #include "math.h"
 
+namespace dragonfly { namespace er {
 
 DragonflyReverbDSP::DragonflyReverbDSP(double sampleRate) {
   model.setMuteOnChange(false);
@@ -109,3 +110,5 @@ void DragonflyReverbDSP::sampleRateChanged(double newSampleRate) {
 void DragonflyReverbDSP::mute() {
   model.mute();
 }
+
+}}
